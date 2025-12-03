@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: documentation-explorer
+    env: static
+    staticPublishPath: ./docs
+    routes:
+      - type: rewrite
+        source: /
+        destination: /viewer/app.html
+      - type: rewrite
+        source: /app.html
+        destination: /viewer/app.html
+      - type: rewrite
+        source: /*
+        destination: /viewer/app.html

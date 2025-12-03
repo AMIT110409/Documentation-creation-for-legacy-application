@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Documentation Explorer</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header class="hero">
+      <div class="hero__content">
+        <p class="hero__eyebrow">Documentation Hub</p>
+        <h1>Explorer & Builder</h1>
+        <p class="hero__lede">
+          Search, filter, and organize your documentation. Drag items to the selection zone to build your custom package.
+        </p>
+      </div>
+    </header>
+
+    <main class="layout">
+      <!-- Column 1: Filters -->
+      <section class="panel panel--filters">
+        <div class="panel__header">
+          <h2>Filters</h2>
+          <button id="clearFilters" type="button" class="link-button">
+            Reset
+          </button>
+        </div>
+        <div class="panel__content">
+          <div class="field-group">
+            <label for="searchInput">Search</label>
+            <div class="searchbox">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M15.5 14h-.79l-.28-.27a6 6 0 10-.71.71l.27.28v.79L20 21.49 21.49 20zm-6 0A4.5 4.5 0 1114 9.5 4.5 4.5 0 019.5 14z"/>
+              </svg>
+              <input
+                type="search"
+                id="searchInput"
+                placeholder="Keywords..."
+                autocomplete="off"
+              />
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label for="categoryFilter">Category</label>
+            <select id="categoryFilter">
+              <option value="all">All Categories</option>
+            </select>
+          </div>
+
+          <div class="field-group">
+            <label for="repoFilter">Repository</label>
+            <select id="repoFilter">
+              <option value="all">All Repositories</option>
+            </select>
+          </div>
+
+          <div class="field-group">
+            <label for="sortOrder">Sort By</label>
+            <select id="sortOrder">
+              <option value="title">Name (A-Z)</option>
+              <option value="category">Category</option>
+              <option value="repo">Repository</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <!-- Column 2: Results -->
+      <section class="panel panel--results">
+        <div class="panel__header">
+          <h2>Documents</h2>
+          <p id="resultsCount" class="muted">Loading...</p>
+        </div>
+        <div class="panel__content">
+          <div id="resultsList" class="results-list" role="list"></div>
+        </div>
+      </section>
+
+      <!-- Column 3: Selection & Preview -->
+      <section class="panel panel--preview">
+        <div class="tabs">
+          <button class="tab active" data-tab="selection">Selection</button>
+          <button class="tab" data-tab="preview">Preview</button>
+        </div>
+        
+        <div class="panel__content">
+          <!-- Selection Tab -->
+          <div id="tab-selection" class="tab-content">
+            <div id="selectionZone" class="selection-zone">
+              <p class="muted" style="text-align: center; margin-top: 2rem;">
+                Drag items here to select them
+              </p>
+            </div>
+            <div style="margin-top: 1rem; text-align: right;">
+              <button id="exportSelection" class="link-button" style="font-size: 1rem;">
+                Export Selection
+              </button>
+            </div>
+          </div>
+
+          <!-- Preview Tab -->
+          <div id="tab-preview" class="tab-content" style="display: none;">
+            <article id="docPreview" class="markdown-body">
+              <p class="muted">Select a document to view details.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <noscript>
+      <p class="noscript">
+        This viewer requires JavaScript.
+      </p>
+    </noscript>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
+

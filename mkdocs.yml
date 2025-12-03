@@ -1,0 +1,27 @@
+site_name: Legacy Documentation Explorer
+site_description: Auto-generated documentation for multi-repo legacy systems
+site_url: ""
+
+theme:
+  name: material
+  features:
+    - navigation.sections
+    - navigation.instant
+    - navigation.top
+    - content.code.copy
+
+markdown_extensions:
+  - admonition
+  - toc:
+      permalink: true
+  - markdown_include.include
+  - pymdownx.escapeall
+
+nav:
+  - Home: index.md
+  - Overview: SUMMARY.md
+  - Explorer: explorer.md
+
+extra:
+  generator: "Codebase Documentation Generator"
+
