@@ -67,6 +67,26 @@ a:hover {
 /* Card styling for content */
 .md-content__inner {
     background-color: var(--upd-background);
+    /* Font overflow fixes */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    max-width: 100%;
+}
+
+/* Fix for long words and URLs */
+.md-typeset {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.md-typeset code,
+.md-typeset pre {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: pre-wrap;
+    max-width: 100%;
+    overflow-x: auto;
 }
 
 /* Navigation styling */
@@ -103,4 +123,39 @@ a:hover {
 .md-typeset table:not([class]) th {
     background-color: var(--upd-primary-dark);
     color: var(--upd-text-light);
+}
+
+/* Collapsible Navigation Styles */
+.md-content ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.md-content ul ul {
+    padding-left: 1.5rem;
+    margin-top: 0.25rem;
+}
+
+.md-content li {
+    margin: 0.25rem 0;
+    line-height: 1.6;
+}
+
+.toc-toggle {
+    font-weight: bold;
+}
+
+/* Back Navigation Button */
+.md-content__button {
+    color: var(--upd-accent-purple);
+}
+
+.md-content__button:hover {
+    color: var(--upd-primary-dark);
+}
+
+/* Breadcrumbs enhancement */
+.md-nav__title {
+    color: var(--upd-accent-purple);
+    font-weight: 600;
 }
