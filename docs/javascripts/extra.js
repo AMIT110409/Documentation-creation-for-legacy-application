@@ -125,117 +125,78 @@ document.addEventListener('DOMContentLoaded', function () {
         addExpandCollapseButtons();
     }
 
-    // Add Previous/Next navigation buttons (W3Schools style)
-    const addPrevNextButtons = () => {
-        // Get navigation links from sidebar
-        const navLinks = Array.from(document.querySelectorAll('.md-nav--primary a.md-nav__link'));
-        const currentPath = window.location.pathname;
+    // Add "Back to Index" button on all document pages
+    const addBackToIndexButton = () => {
+        // Don't add on home, SUMMARY, or explorer pages
+        if (window.location.pathname.endsWith('/') ||
+            window.location.pathname.includes('SUMMARY') ||
+            window.location.pathname.includes('explorer') ||
+            window.location.pathname.includes('index.html')) {
+            return;
+        }
 
-        // Find current page index
-        let currentIndex = -1;
-        navLinks.forEach((link, index) => {
-            if (link.href && currentPath.includes(link.getAttribute('href'))) {
-                currentIndex = index;
-            }
-        });
+        const content = document.querySelector('.md-content__inner');
+        if (!content) return;
 
-        if (currentIndex === -1) return;
+        // Create back button container
+        const backButtonContainer = document.createElement('div');
+        backButtonContainer.style.cssText = `
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid #e2e8f0;
+    `;
 
-        const prevLink = currentIndex > 0 ? navLinks[currentIndex - 1] : null;
-        const nextLink = currentIndex < navLinks.length - 1 ? navLinks[currentIndex + 1] : null;
+        // Create back button
+        const backButton = document.createElement('a');
+        backButton.href = '../SUMMARY/';
+        backButton.innerHTML = '← Back to Documentation Index';
+        backButton.style.cssText = `
+      display: inline-block;
+      background-color: #6B4C9A;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: 500;
+      font-family: 'Poppins', Arial, sans-serif;
+      transition: all 0.3s ease;
+    `;
 
-        // Create navigation container
-        const createNavButtons = () => {
-            const navContainer = document.createElement('div');
-            navContainer.className = 'page-navigation';
-            navContainer.style.cssText = `
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin: 2rem 0;
-        padding: 1rem 0;
-        border-top: 1px solid #e2e8f0;
-      `;
-
-            // Previous button
-            if (prevLink) {
-                const prevBtn = document.createElement('a');
-                prevBtn.href = prevLink.href;
-                prevBtn.innerHTML = '❮ Previous';
-                prevBtn.className = 'nav-btn nav-btn--prev';
-                prevBtn.style.cssText = `
-          background-color: #6B4C9A;
-          color: white;
-          padding: 0.75rem 1.5rem;
-          border-radius: 4px;
-          text-decoration: none;
-          font-weight: 500;
-          transition: all 0.3s ease;
-          display: inline-block;
-        `;
-                prevBtn.onmouseover = () => {
-                    prevBtn.style.backgroundColor = '#4B2C7A';
-                    prevBtn.style.transform = 'translateY(-2px)';
-                };
-                prevBtn.onmouseout = () => {
-                    prevBtn.style.backgroundColor = '#6B4C9A';
-                    prevBtn.style.transform = 'translateY(0)';
-                };
-                navContainer.appendChild(prevBtn);
-            } else {
-                navContainer.appendChild(document.createElement('div'));
-            }
-
-            // Next button
-            if (nextLink) {
-                const nextBtn = document.createElement('a');
-                nextBtn.href = nextLink.href;
-                nextBtn.innerHTML = 'Next ❯';
-                nextBtn.className = 'nav-btn nav-btn--next';
-                nextBtn.style.cssText = `
-          background-color: #6B4C9A;
-          color: white;
-          padding: 0.75rem 1.5rem;
-          border-radius: 4px;
-          text-decoration: none;
-          font-weight: 500;
-          transition: all 0.3s ease;
-          display: inline-block;
-        `;
-                nextBtn.onmouseover = () => {
-                    nextBtn.style.backgroundColor = '#4B2C7A';
-                    nextBtn.style.transform = 'translateY(-2px)';
-                };
-                nextBtn.onmouseout = () => {
-                    nextBtn.style.backgroundColor = '#6B4C9A';
-                    nextBtn.style.transform = 'translateY(0)';
-                };
-                navContainer.appendChild(nextBtn);
-            } else {
-                navContainer.appendChild(document.createElement('div'));
-            }
-
-            return navContainer;
+        backButton.onmouseover = () => {
+            backButton.style.backgroundColor = '#4B2C7A';
+            backButton.style.transform = 'translateY(-2px)';
+            backButton.style.boxShadow = '0 4px 12px rgba(107, 76, 154, 0.3)';
         };
 
-        // Add navigation at top and bottom of content
-        const content = document.querySelector('.md-content__inner');
-        if (content) {
-            // Add at top
-            const topNav = createNavButtons();
-            const firstElement = content.firstElementChild;
-            if (firstElement) {
-                content.insertBefore(topNav, firstElement);
-            }
+        backButton.onmouseout = () => {
+            backButton.style.backgroundColor = '#6B4C9A';
+            backButton.style.transform = 'translateY(0)';
+            backButton.style.boxShadow = 'none';
+        };
 
-            // Add at bottom
-            const bottomNav = createNavButtons();
-            content.appendChild(bottomNav);
+        backButtonContainer.appendChild(backButton);
+
+        // Insert at the top of content
+        const firstElement = content.firstElementChild;
+        if (firstElement) {
+            content.insertBefore(backButtonContainer, firstElement);
         }
+
+        // Also add at the bottom
+        const bottomBackButton = backButtonContainer.cloneNode(true);
+        bottomBackButton.style.borderBottom = 'none';
+        bottomBackButton.style.borderTop = '2px solid #e2e8f0';
+        bottomBackButton.style.paddingTop = '1rem';
+        bottomBackButton.style.paddingBottom = '0';
+
+        // Re-add event listeners to cloned button
+        const bottomBtn = bottomBackButton.querySelector('a');
+        bottomBtn.onmouseover = backButton.onmouseover;
+        bottomBtn.onmouseout = backButton.onmouseout;
+
+        content.appendChild(bottomBackButton);
     };
 
-    // Add prev/next buttons on all pages except home
-    if (!window.location.pathname.endsWith('/') && !window.location.pathname.includes('index.html')) {
-        addPrevNextButtons();
-    }
+    // Add back button on document pages
+    addBackToIndexButton();
 });
